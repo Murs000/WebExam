@@ -10,5 +10,7 @@ namespace WebExam.DataAccess.Repositories.Interfaces
 
         public IExamRepository ExamRepository { get; }
         public IExamPaperRepository ExamPaperRepository { get; }
+
+        public IUserRepository UserRepository { get; }
     }
 }

@@ -12,5 +12,7 @@ namespace WebExam.DataAccess.Repositorys.Implementations
 
         public DbSet<Exam> Exams => Set<Exam>();
         public DbSet<ExamPaper> ExamPapers => Set<ExamPaper>();
+
+        public DbSet<User> Users => Set<User>();
     }
 }

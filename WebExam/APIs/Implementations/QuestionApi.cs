@@ -12,27 +12,32 @@ namespace WebExam.APIs.Implementations
             app.MapGet("/Questions", Get)
                 .Produces<List<QuestionModel>>(StatusCodes.Status200OK)
                 .WithName("GetAllQuestions")
-                .WithTags("Getters");
+                .WithTags("Getters")
+                .RequireAuthorization(["Teacher","Admin"]);
 
             app.MapGet("/Questions/{id}", GetById)
                 .Produces<QuestionModel>(StatusCodes.Status200OK)
                 .WithName("GetQuestion")
-                .WithTags("Getters");
+                .WithTags("Getters")
+                .RequireAuthorization(["Teacher", "Admin"]);
 
             app.MapPost("/Questions", Post)
                 .Accepts<QuestionModel>("application/json")
                 .Produces<QuestionModel>(StatusCodes.Status201Created)
                 .WithName("CreateQuestion")
-                .WithTags("Creators");
+                .WithTags("Creators")
+                .RequireAuthorization([\"Teacher\",\"Admin\"]);
 
             app.MapPut("/Questions", Put)
                 .Accepts<QuestionModel>("application/json")
                 .WithName("UpdateQuestion")
-                .WithTags("Updaters");
+                .WithTags("Updaters")
+                .RequireAuthorization(["Teacher","Admin"]);
 
             app.MapDelete("Questions/{id}", Delete)
                 .WithName("DeleteQuestion")
-                .WithTags("Deleters");
+                .WithTags("Deleters")
+                .RequireAuthorization(["Teacher", "Admin"]);
 
         }
 

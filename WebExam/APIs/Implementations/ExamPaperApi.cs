@@ -12,27 +12,32 @@ namespace WebExam.APIs.Implementations
             app.MapGet("/ExamPapers", Get)
                 .Produces<List<ExamPaperModel>>(StatusCodes.Status200OK)
                 .WithName("GetAllExamPapers")
-                .WithTags("Getters");
+                .WithTags("Getters")
+                .RequireAuthorization("Student");
 
             app.MapGet("/ExamPapers/{id}", GetById)
                 .Produces<ExamPaperModel>(StatusCodes.Status200OK)
                 .WithName("GetExamPaper")
-                .WithTags("Getters");
+                .WithTags("Getters")
+                .RequireAuthorization("Student");
 
             app.MapPost("/ExamPapers", Post)
                 .Accepts<ExamPaperModel>("application/json")
                 .Produces<ExamPaperModel>(StatusCodes.Status201Created)
                 .WithName("CreatetExamPaper")
-                .WithTags("Creators");
+                .WithTags("Creators")
+                .RequireAuthorization("Student");
 
             app.MapPut("/ExamPapers", Put)
                 .Accepts<ExamPaperModel>("application/json")
                 .WithName("UpdatetExamPaper")
-                .WithTags("Updaters");
+                .WithTags("Updaters")
+                .RequireAuthorization("Student");
 
             app.MapDelete("ExamPapers/{id}", Delete)
                 .WithName("DeletetExamPaper")
-                .WithTags("Deleters");
+                .WithTags("Deleters")
+                .RequireAuthorization("Student");
 
         }
 

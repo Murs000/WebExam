@@ -15,5 +15,7 @@ namespace WebExam.DataAccess.Repositories.Implementations.SqlServer
 
         public IExamRepository ExamRepository => new SqlExamRepository(context);
         public IExamPaperRepository ExamPaperRepository => new SqlExamPaperRepository(context);
+
+        public IUserRepository UserRepository => new SqlUserRepository(context);
     }
 }

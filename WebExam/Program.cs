@@ -8,6 +8,9 @@ using WebExam.Mappers.Interfaces;
 using WebExam.Services.Implementations;
 using WebExam.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +37,39 @@ void RegisterServices(IServiceCollection services)
     {
         options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer"));
     });
+
+    builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = false,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("9NlCOGZ79ANvHktNCIcJrZVGpPaX6wFT"))
+        };
+    });
+
+    builder.Services.AddAuthorization(options =>
+    {
+        options.AddPolicy("Admin", policy =>
+        {
+            policy.RequireAuthenticatedUser(); 
+            policy.RequireRole("Admin"); 
+        });
+        options.AddPolicy("Student", policy =>
+        {
+            policy.RequireAuthenticatedUser();
+            policy.RequireRole("Student"); 
+        });
+        options.AddPolicy("Teacher", policy =>
+        {
+            policy.RequireAuthenticatedUser();
+            policy.RequireRole("Teacher"); 
+        });
+    });
+
     services.AddScoped<IUnitOfWork, SqlUnitOfWork>();
     services.AddScoped<IMapperUnitOfWork, MapperUnitOfWork>();
     services.AddScoped<IServiceUnitOfWork, ServiceUnitOfWork>();
@@ -41,8 +77,13 @@ void RegisterServices(IServiceCollection services)
     services.AddTransient<IApi, SubjectApi>();
     services.AddTransient<IApi, QuestionApi>();
     services.AddTransient<IApi, ChoiseApi>();
+
     services.AddTransient<IApi, ExamApi>();
     services.AddTransient<IApi, ExamPaperApi>();
+
+    services.AddTransient<IApi, UserApi>();
+
+    services.AddTransient<IApi, AuthApi>();
 }
 
 void Configure(WebApplication app)
@@ -55,6 +96,9 @@ void Configure(WebApplication app)
         var db = scope.ServiceProvider.GetRequiredService<ExamAppDb>();
         db.Database.EnsureCreated();
     }
+
+    app.UseAuthentication();
+    app.UseAuthorization();
 
     app.UseHttpsRedirection();
 }

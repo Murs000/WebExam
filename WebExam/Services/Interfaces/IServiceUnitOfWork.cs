@@ -8,5 +8,7 @@
 
         public IExamService ExamService { get; }
         public IExamPaperService ExamPaperService { get; }
+
+        public IUserService UserService { get; }
     }
 }

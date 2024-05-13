@@ -8,5 +8,7 @@
 
         public IExamMapper ExamMapper { get; }
         public IExamPaperMapper ExamPaperMapper { get; }
+
+        public IUserMapper UserMapper { get; }
     }
 }

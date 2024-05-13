@@ -12,27 +12,32 @@ namespace WebExam.APIs.Implementations
             app.MapGet("/Subjects", Get)
                 .Produces<List<SubjectModel>>(StatusCodes.Status200OK)
                 .WithName("GetAllSubjects")
-                .WithTags("Getters");
+                .WithTags("Getters")
+                .RequireAuthorization("Admin");
 
             app.MapGet("/Subjects/{id}", GetById)
                 .Produces<SubjectModel>(StatusCodes.Status200OK)
                 .WithName("GetSubject")
-                .WithTags("Getters");
+                .WithTags("Getters")
+                .RequireAuthorization("Admin");
 
             app.MapPost("/Subjects", Post)
                 .Accepts<SubjectModel>("application/json")
                 .Produces<SubjectModel>(StatusCodes.Status201Created)
                 .WithName("CreateSubject")
-                .WithTags("Creators");
+                .WithTags("Creators")
+                .RequireAuthorization("Admin");
 
             app.MapPut("/Subjects", Put)
                 .Accepts<SubjectModel>("application/json")
                 .WithName("UpdateSubject")
-                .WithTags("Updaters");
+                .WithTags("Updaters")
+                .RequireAuthorization("Admin");
 
             app.MapDelete("Subjects/{id}", Delete)
                 .WithName("DeleteSubject")
-                .WithTags("Deleters");
+                .WithTags("Deleters")
+                .RequireAuthorization("Admin");
 
         }
 

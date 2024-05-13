@@ -10,5 +10,7 @@ namespace WebExam.Mappers.Implementations
 
         public IExamMapper ExamMapper => new ExamMapper();
         public IExamPaperMapper ExamPaperMapper => new ExamPaperMapper();
+
+        public IUserMapper UserMapper => new UserMapper();
     }
 }

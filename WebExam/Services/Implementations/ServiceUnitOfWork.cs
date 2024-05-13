@@ -12,5 +12,7 @@ namespace WebExam.Services.Implementations
 
         public IExamService ExamService => new ExamService(mapper, repository);
         public IExamPaperService ExamPaperService => new ExamPaperService(mapper, repository);
+
+        public IUserService UserService => new UserService(mapper, repository);
     }
 }
