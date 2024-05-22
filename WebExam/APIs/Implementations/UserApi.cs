@@ -13,32 +13,32 @@ namespace WebExam.APIs.Implementations
             app.MapGet("/Users", Get)
                 .Produces<List<UserModel>>(StatusCodes.Status200OK)
                 .WithName("GetAllUsers")
-                .WithTags("Getters")
-                .RequireAuthorization("Admin");
+                .WithTags("Getters");
+            //.RequireAuthorization("Admin");
 
             app.MapGet("/Users/{id}", GetById)
                 .Produces<UserModel>(StatusCodes.Status200OK)
                 .WithName("GetUser")
-                .WithTags("Getters")
-                .RequireAuthorization("Admin");
+                .WithTags("Getters");
+                //.RequireAuthorization("Admin");
 
             app.MapPost("/Users", Post)
                 .Accepts<UserModel>("application/json")
                 .Produces<UserModel>(StatusCodes.Status201Created)
                 .WithName("CreateUser")
-                .WithTags("Creators")
-                .RequireAuthorization("Admin");
+                .WithTags("Creators");
+                //.RequireAuthorization("Admin");
 
             app.MapPut("/Users", Put)
                 .Accepts<UserModel>("application/json")
                 .WithName("UpdateUser")
-                .WithTags("Updaters")
-                .RequireAuthorization("Admin");
+                .WithTags("Updaters");
+                //.RequireAuthorization("Admin");
 
             app.MapDelete("Users/{id}", Delete)
                 .WithName("DeleteUser")
-                .WithTags("Deleters")
-                .RequireAuthorization("Admin");
+                .WithTags("Deleters");
+                //.RequireAuthorization("Admin");
 
         }
 

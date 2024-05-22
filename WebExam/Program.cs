@@ -36,6 +36,7 @@ void RegisterServices(IServiceCollection services)
     services.AddDbContext<ExamAppDb>(options =>
     {
         options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer"));
+        options.EnableSensitiveDataLogging();
     });
 
     builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -53,7 +54,7 @@ void RegisterServices(IServiceCollection services)
 
     builder.Services.AddAuthorization(options =>
     {
-        options.AddPolicy("Admin", policy =>
+        options.AddPolicy("AdminOnly", policy =>
         {
             policy.RequireAuthenticatedUser(); 
             policy.RequireRole("Admin"); 
@@ -63,10 +64,10 @@ void RegisterServices(IServiceCollection services)
             policy.RequireAuthenticatedUser();
             policy.RequireRole("Student"); 
         });
-        options.AddPolicy("Teacher", policy =>
+        options.AddPolicy("Stuff", policy =>
         {
             policy.RequireAuthenticatedUser();
-            policy.RequireRole("Teacher"); 
+            policy.RequireRole("Teacher","Admin");
         });
     });
 

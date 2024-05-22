@@ -13,31 +13,31 @@ namespace WebExam.APIs.Implementations
                 .Produces<List<ChoiseModel>>(StatusCodes.Status200OK)
                 .WithName("GetAllExams")
                 .WithTags("Getters")
-                .RequireAuthorization("Admin");
+                .RequireAuthorization("AdminOnly");
 
             app.MapGet("/Exams/{id}", GetById)
                 .Produces<ChoiseModel>(StatusCodes.Status200OK)
                 .WithName("GetExam")
                 .WithTags("Getters")
-                .RequireAuthorization("Admin");
+                .RequireAuthorization("AdminOnly");
 
             app.MapPost("/Exams", Post)
                 .Accepts<ChoiseModel>("application/json")
                 .Produces<ChoiseModel>(StatusCodes.Status201Created)
                 .WithName("CreatetExam")
                 .WithTags("Creators")
-                .RequireAuthorization("Admin");
+                .RequireAuthorization("AdminOnly");
 
             app.MapPut("/Exams", Put)
                 .Accepts<ChoiseModel>("application/json")
                 .WithName("UpdatetExam")
                 .WithTags("Updaters")
-                .RequireAuthorization("Admin");
+                .RequireAuthorization("AdminOnly");
 
             app.MapDelete("Exams/{id}", Delete)
                 .WithName("DeletetExam")
                 .WithTags("Deleters")
-                .RequireAuthorization("Admin");
+                .RequireAuthorization("AdminOnly");
 
         }
 

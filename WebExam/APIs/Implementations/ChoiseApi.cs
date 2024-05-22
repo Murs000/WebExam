@@ -14,31 +14,31 @@ namespace WebExam.APIs.Implementations
                 .Produces<List<ChoiseModel>>(StatusCodes.Status200OK)
                 .WithName("GetAllChoises")
                 .WithTags("Getters")
-                .RequireAuthorization(["Teacher", "Admin"]);
+                .RequireAuthorization("Stuff");
 
             app.MapGet("/Choises/{id}", GetById)
                 .Produces<ChoiseModel>(StatusCodes.Status200OK)
                 .WithName("GetChoise")
                 .WithTags("Getters")
-                .RequireAuthorization(["Teacher", "Admin"]);
+                .RequireAuthorization("Stuff");
 
             app.MapPost("/Choises", Post)
                 .Accepts<ChoiseModel>("application/json")
                 .Produces<ChoiseModel>(StatusCodes.Status201Created)
                 .WithName("CreateChoise")
                 .WithTags("Creators")
-                .RequireAuthorization(["Teacher", "Admin"]);
+                .RequireAuthorization("Stuff");
 
             app.MapPut("/Choises", Put)
                 .Accepts<ChoiseModel>("application/json")
                 .WithName("UpdateChoise")
                 .WithTags("Updaters")
-                .RequireAuthorization(["Teacher", "Admin"]);
+                .RequireAuthorization("Stuff");
 
             app.MapDelete("Choises/{id}", Delete)
                 .WithName("DeleteChoise")
                 .WithTags("Deleters")
-                .RequireAuthorization(["Teacher", "Admin"]);
+                .RequireAuthorization("Stuff");
 
         }
 

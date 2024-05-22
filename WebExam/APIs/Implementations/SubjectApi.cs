@@ -13,31 +13,31 @@ namespace WebExam.APIs.Implementations
                 .Produces<List<SubjectModel>>(StatusCodes.Status200OK)
                 .WithName("GetAllSubjects")
                 .WithTags("Getters")
-                .RequireAuthorization("Admin");
+                .RequireAuthorization("AdminOnly");
 
             app.MapGet("/Subjects/{id}", GetById)
                 .Produces<SubjectModel>(StatusCodes.Status200OK)
                 .WithName("GetSubject")
                 .WithTags("Getters")
-                .RequireAuthorization("Admin");
+                .RequireAuthorization("AdminOnly");
 
             app.MapPost("/Subjects", Post)
                 .Accepts<SubjectModel>("application/json")
                 .Produces<SubjectModel>(StatusCodes.Status201Created)
                 .WithName("CreateSubject")
                 .WithTags("Creators")
-                .RequireAuthorization("Admin");
+                .RequireAuthorization("AdminOnly");
 
             app.MapPut("/Subjects", Put)
                 .Accepts<SubjectModel>("application/json")
                 .WithName("UpdateSubject")
                 .WithTags("Updaters")
-                .RequireAuthorization("Admin");
+                .RequireAuthorization("AdminOnly");
 
             app.MapDelete("Subjects/{id}", Delete)
                 .WithName("DeleteSubject")
                 .WithTags("Deleters")
-                .RequireAuthorization("Admin");
+                .RequireAuthorization("AdminOnly");
 
         }
 

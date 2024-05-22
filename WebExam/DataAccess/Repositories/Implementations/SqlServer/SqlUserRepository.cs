@@ -1,4 +1,5 @@
-﻿using WebExam.DataAccess.Repositories.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using WebExam.DataAccess.Repositories.Interfaces;
 using WebExam.DataAccess.Repositorys.Implementations;
 using WebExam.Entity.Implementations;
 
@@ -19,19 +20,15 @@ namespace WebExam.DataAccess.Repositories.Implementations.SqlServer
         public bool Update(User entity)
         {
             User entityFromDb = context.Users.First(e => e.Id == entity.Id);
-            if (entityFromDb == null) return false;
+            if (entityFromDb == null) 
+                return false;
 
-            entityFromDb = new User
-            {
-                Id = entity.Id,
-                Login = entityFromDb.Login,
-                Name = entityFromDb.Name,
-                Role = entityFromDb.Role,
-                Surname = entityFromDb.Surname,
-                PasswordHash = entityFromDb.PasswordHash,
-            };
+            entityFromDb.Login = entity.Login;
+            entityFromDb.Name = entity.Name;
+            entityFromDb.Role = entity.Role;
+            entityFromDb.Surname = entity.Surname;
+            entityFromDb.PasswordHash = entity.PasswordHash;
 
-            context.Update(entityFromDb);
             context.SaveChanges();
 
             return true;

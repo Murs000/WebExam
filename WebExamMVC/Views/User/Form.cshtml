@@ -1,0 +1,49 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    @using WebExamMVC.Models;
+    @using WebExamMVC.Enums;
+    @model UserModel
+
+<h1>Create User</h1>
+
+<form asp-action="Insert" method="post">
+        <input asp-for="Id" hidden />
+
+    <div class="form-group">
+        <label asp-for="Login" class="control-label">Login</label>
+        <input asp-for="Login" class="form-control" />
+        <span asp-validation-for="Login" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Name" class="control-label">Name</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Surname" class="control-label">Surname</label>
+        <input asp-for="Surname" class="form-control" />
+        <span asp-validation-for="Surname" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PasswordHash" class="control-label">Password</label>
+        <input asp-for="PasswordHash" class="form-control" type="password" />
+        <span asp-validation-for="PasswordHash" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Role" class="control-label">Role</label>
+        <select asp-for="Role" class="form-control">
+            <option value="@UserRole.None">UserRole</option>
+            <option value="@UserRole.Admin">Admin</option>
+            <option value="@UserRole.Teacher">Teacher</option>
+            <option value="@UserRole.Student">Student</option>
+        </select>
+        <span asp-validation-for="Role" class="text-danger"></span>
+    </div>
+    <div class="form-group" style="display: inline-block; margin-top: 25px;">
+        <button type="submit" class="btn btn-success">Insert</button>
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </div>
+</form>
+}
