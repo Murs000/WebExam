@@ -1,6 +1,4 @@
-﻿
-
-namespace WebExamMVC.Models
+﻿namespace WebExamMVC.Models
 {
     public class QuestionModel 
     {

@@ -39,35 +39,39 @@ void RegisterServices(IServiceCollection services)
         options.EnableSensitiveDataLogging();
     });
 
-    builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
+    services.AddAuthentication(options =>
     {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    }).AddJwtBearer(options =>
+    {
+        options.RequireHttpsMetadata = false;
+        options.SaveToken = true;
         options.TokenValidationParameters = new TokenValidationParameters
         {
-            ValidateIssuer = false,
-            ValidateAudience = false,
-            ValidateLifetime = false,
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("9NlCOGZ79ANvHktNCIcJrZVGpPaX6wFT"))
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("9NlCOGZ79ANvHktNCIcJrZVGpPaX6wFT")),
+            ValidateIssuer = false,
+            ValidateAudience = false
         };
     });
 
-    builder.Services.AddAuthorization(options =>
+    services.AddAuthorization(options =>
     {
         options.AddPolicy("AdminOnly", policy =>
         {
-            policy.RequireAuthenticatedUser(); 
-            policy.RequireRole("Admin"); 
+            policy.RequireAuthenticatedUser();
+            policy.RequireRole("Admin");
         });
         options.AddPolicy("Student", policy =>
         {
             policy.RequireAuthenticatedUser();
-            policy.RequireRole("Student"); 
+            policy.RequireRole("Student");
         });
         options.AddPolicy("Stuff", policy =>
         {
             policy.RequireAuthenticatedUser();
-            policy.RequireRole("Teacher","Admin");
+            policy.RequireRole("Teacher", "Admin");
         });
     });
 
@@ -83,7 +87,6 @@ void RegisterServices(IServiceCollection services)
     services.AddTransient<IApi, ExamPaperApi>();
 
     services.AddTransient<IApi, UserApi>();
-
     services.AddTransient<IApi, AuthApi>();
 }
 
@@ -98,8 +101,7 @@ void Configure(WebApplication app)
         db.Database.EnsureCreated();
     }
 
+    app.UseHttpsRedirection();
     app.UseAuthentication();
     app.UseAuthorization();
-
-    app.UseHttpsRedirection();
 }

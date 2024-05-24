@@ -1,25 +1,25 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using WebExamMVC.Models;
 
 namespace WebExamMVC.Services
 {
-    public class UserService/*(HttpClient httpClient, *//*TokenManagementService tokenManagementService*//*)*/ 
+    public class UserService 
     {
         private readonly HttpClient _httpClient;
-
-        public UserService(IHttpClientFactory httpClientFactory)
+        public UserService(IHttpClientFactory httpClientFactory, JwtTokenService tokenService)
         {
             _httpClient = httpClientFactory.CreateClient();
+            SetToken(tokenService.GetToken());
         }
-
+        private void SetToken(string token)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        }
         public async Task<List<UserModel>> Get()
         {
-            /*var jwtToken = await tokenManagementService.GetOrRenewTokenAsync("your_username", "your_password");
-
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);*/
-
             var response = await _httpClient.GetAsync("https://localhost:7207/Users");
             response.EnsureSuccessStatusCode();
 

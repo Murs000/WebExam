@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using WebExamMVC.Models;
 using WebExamMVC.Services;
 
 namespace WebExamMVC.Controllers
 {
-    public class UserController (UserService service) : Controller
+    public class UserController(UserService service) : Controller
     {
         public async Task<IActionResult> Index()
         {
@@ -23,8 +24,8 @@ namespace WebExamMVC.Controllers
         }
         public async Task<IActionResult> Insert(UserModel user)
         {
-            //if (ModelState.IsValid)
-            //{
+            if (ModelState.IsValid)
+            {
                 if(user.Id == 0)
                 {
                     await service.Create(user);
@@ -33,7 +34,7 @@ namespace WebExamMVC.Controllers
                 {
                     await service.Update(user);
                 }
-            //}
+            }
             return RedirectToAction(nameof(Index));
         }
 
