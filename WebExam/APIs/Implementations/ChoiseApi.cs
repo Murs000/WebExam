@@ -11,26 +11,26 @@ namespace WebExam.APIs.Implementations
         public void Register(WebApplication app)
         {
             app.MapGet("/Choises", Get)
-                .Produces<List<ChoiseModel>>(StatusCodes.Status200OK)
+                .Produces<List<Choise>>(StatusCodes.Status200OK)
                 .WithName("GetAllChoises")
                 .WithTags("Getters")
                 .RequireAuthorization("Stuff");
 
             app.MapGet("/Choises/{id}", GetById)
-                .Produces<ChoiseModel>(StatusCodes.Status200OK)
+                .Produces<Choise>(StatusCodes.Status200OK)
                 .WithName("GetChoise")
                 .WithTags("Getters")
                 .RequireAuthorization("Stuff");
 
             app.MapPost("/Choises", Post)
-                .Accepts<ChoiseModel>("application/json")
-                .Produces<ChoiseModel>(StatusCodes.Status201Created)
+                .Accepts<Choise>("application/json")
+                .Produces<Choise>(StatusCodes.Status201Created)
                 .WithName("CreateChoise")
                 .WithTags("Creators")
                 .RequireAuthorization("Stuff");
 
             app.MapPut("/Choises", Put)
-                .Accepts<ChoiseModel>("application/json")
+                .Accepts<Choise>("application/json")
                 .WithName("UpdateChoise")
                 .WithTags("Updaters")
                 .RequireAuthorization("Stuff");
@@ -43,22 +43,22 @@ namespace WebExam.APIs.Implementations
         }
 
         private IResult Get(IServiceUnitOfWork service) =>
-            service.ChoiseService.Get() is List<ChoiseModel> choises
+            service.ChoiseService.Get() is List<Choise> choises
             ? Results.Ok(choises)
             : Results.NotFound();
 
         private IResult GetById(int id, IServiceUnitOfWork service) =>
-            service.ChoiseService.Get(id) is ChoiseModel choise
+            service.ChoiseService.Get(id) is Choise choise
             ? Results.Ok(choise)
             : Results.NotFound();
 
-        private IResult Post([FromBody] ChoiseModel choise, IServiceUnitOfWork service)
+        private IResult Post([FromBody] Choise choise, IServiceUnitOfWork service)
         {
             service.ChoiseService.Insert(choise);
             return Results.Created($"/Choises/{choise.Id}", choise);
         }
 
-        private IResult Put([FromBody] ChoiseModel choise, IServiceUnitOfWork service)
+        private IResult Put([FromBody] Choise choise, IServiceUnitOfWork service)
         {
             service.ChoiseService.Update(choise);
             return Results.NoContent();

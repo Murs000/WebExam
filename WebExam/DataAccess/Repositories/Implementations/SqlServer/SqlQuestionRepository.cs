@@ -15,9 +15,29 @@ namespace WebExam.DataAccess.Repositories.Implementations.SqlServer
         public Question Get(int entityId) => _context.Questions.First(e => e.Id == entityId);
         public int Insert(Question entity)
         {
-            _context.Questions.Add(entity);
-            _context.SaveChanges();
+            int existingSubjectId = entity.Subject.Id;
 
+            // Check if the Subject entity with the existingSubjectId is already tracked by the context
+            var existingSubject = _context.Subjects.First(e => e.Id == existingSubjectId);
+
+            if (existingSubject != null)
+            {
+                // If the existingSubjectId is already tracked, use it directly
+                var newQuestion = new Question
+                {
+                    Condition = entity.Condition,
+                    SubjectId = existingSubjectId,  // Set the SubjectId property to reference the existing Subject
+                    Subject = existingSubject,
+                };
+
+                // Add the new Question entity to the context
+                _context.Questions.Add(newQuestion);
+
+                // Save changes to the database
+                _context.SaveChanges();
+
+                entity.Id = newQuestion.Id;
+            }
             return entity.Id;
         }
         public bool Update(Question entity)
@@ -25,14 +45,11 @@ namespace WebExam.DataAccess.Repositories.Implementations.SqlServer
             Question entityFromDb = _context.Questions.First(e => e.Id == entity.Id);
             if (entityFromDb == null) return false;
 
-            entityFromDb = new Question
-            {
-                Id = entity.Id,
-                Condition = entity.Condition,
-                Choises = new List<Choise>(entityFromDb.Choises)
-            };
 
-            _context.Update(entityFromDb);
+            entityFromDb.Id = entity.Id;
+            entityFromDb.Condition = entity.Condition;
+            entityFromDb.Subject = _context.Subjects.First(e => e.Id == entity.Subject.Id);
+            
             _context.SaveChanges();
 
             return true;

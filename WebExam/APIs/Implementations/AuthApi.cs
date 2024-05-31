@@ -10,7 +10,7 @@ namespace WebExam.APIs.Implementations
     {
         public void Register(WebApplication app)
         {
-            app.MapPost("/api/Login", Login)
+            app.MapPost("/Login", Login)
                 .Accepts<LoginModel>("application/json")
                 .Produces<string>(StatusCodes.Status200OK)
                 .Produces(StatusCodes.Status404NotFound);

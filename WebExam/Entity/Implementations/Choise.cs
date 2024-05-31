@@ -8,7 +8,7 @@ namespace WebExam.Entity.Implementations
         [Key]
         public int Id { get; set; }
         public string Answer { get; set; } = string.Empty;
-        public int QuestionId => Question.Id;
+        public int QuestionId { get; set; }
         public Question Question { get; set; } = new Question();
         public bool IsTrue { get; set; } = false;
     }

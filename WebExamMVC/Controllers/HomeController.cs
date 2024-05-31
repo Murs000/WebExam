@@ -61,7 +61,7 @@ namespace WebExamMVC.Controllers
         private async Task<string> GetJwtToken(string login, string password)
         {
             var client = _httpClientFactory.CreateClient();
-            var response = await client.PostAsJsonAsync("https://localhost:7207/api/Login", new { login, password });
+            var response = await client.PostAsJsonAsync("https://localhost:7207/Login", new { login, password });
 
             if (response.IsSuccessStatusCode)
             {

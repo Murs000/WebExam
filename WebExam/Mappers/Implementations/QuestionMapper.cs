@@ -12,12 +12,11 @@ namespace WebExam.Mappers.Implementations
             {
                 Id = entity.Id,
                 Condition = entity.Condition,
-                Choises = new List<Choise>(entity.Choises),
+                SubjectId = entity.SubjectId,
                 Subject = new Subject()
                 {
                     Id=entity.Subject.Id,
                     Name = entity.Subject.Name,
-                    Questions = new List<Question>(entity.Subject.Questions)
                 },
             };
             return model;
@@ -29,12 +28,11 @@ namespace WebExam.Mappers.Implementations
             {
                 Id = model.Id,
                 Condition = model.Condition,
-                Choises = new List<Choise>(model.Choises),
+                SubjectId = model.SubjectId,
                 Subject = new Subject()
                 {
                     Id = model.Subject.Id,
                     Name = model.Subject.Name,
-                    Questions = new List<Question>(model.Subject.Questions)
                 },
             };
             return entity;

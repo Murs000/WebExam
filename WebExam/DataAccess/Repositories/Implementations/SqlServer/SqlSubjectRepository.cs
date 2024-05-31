@@ -24,14 +24,9 @@ namespace WebExam.DataAccess.Repositorys.Implementations.SqlServer
             Subject entityFromDb = _context.Subjects.First(e => e.Id == entity.Id);
             if (entityFromDb == null) return false;
 
-            entityFromDb = new Subject
-            {
-                Id = entity.Id,
-                Name = entity.Name,
-                Questions = new List<Question>(entityFromDb.Questions)
-            };
-            
-            _context.Update(entityFromDb);
+            entityFromDb.Id = entity.Id;
+            entityFromDb.Name = entity.Name;
+
             _context.SaveChanges();
 
             return true;

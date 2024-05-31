@@ -41,6 +41,9 @@ builder.Services.AddSession(options =>
 });
 
 builder.Services.AddTransient<UserService>();
+builder.Services.AddTransient<SubjectService>();
+builder.Services.AddTransient<QuestionService>();
+builder.Services.AddTransient<ExamService>();
 
 builder.Services.AddHttpClient();
 

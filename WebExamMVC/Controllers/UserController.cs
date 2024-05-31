@@ -24,8 +24,8 @@ namespace WebExamMVC.Controllers
         }
         public async Task<IActionResult> Insert(UserModel user)
         {
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
                 if(user.Id == 0)
                 {
                     await service.Create(user);
@@ -34,7 +34,7 @@ namespace WebExamMVC.Controllers
                 {
                     await service.Update(user);
                 }
-            }
+            //}
             return RedirectToAction(nameof(Index));
         }
 

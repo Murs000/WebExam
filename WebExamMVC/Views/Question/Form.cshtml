@@ -1,0 +1,81 @@
+﻿@{
+    @using WebExamMVC.ViewModels;
+    @model QuestionViewModel
+
+}
+
+<h1>Create Question</h1>
+
+<form asp-action="Insert" method="post">
+    <input asp-for="Id" hidden />
+
+    <div class="form-group">
+        <label asp-for="Condition" class="control-label">Condition</label>
+        <input asp-for="Condition" class="form-control" />
+        <span asp-validation-for="Condition" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="SubjectId" class="control-label">Subject</label>
+        <select asp-for="SubjectId" class="form-control">
+            @foreach (var subject in Model.Subjects)
+            {
+                <option value="@subject.Id">@subject.Name</option>
+            }
+        </select>
+        <span asp-validation-for="SubjectId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Choices</label>
+        <div id="choicesContainer">
+            @for (int i = 0; i < Model.Choises.Count; i++)
+            {
+                <div class="choice-item" style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                    <input asp-for="Choises[i].Id" hidden />
+                    <input asp-for="Choises[i].Answer" class="form-control" placeholder="Answer" style="flex-grow: 1;" />
+                    <input type="radio" name="CorrectChoiceIndex" value="@i" @(Model.CorrectChoiceIndex == i ? "checked" : "") /> Correct
+                    <button type="button" class="btn btn-danger remove-choice-button">Remove</button>
+                    <span asp-validation-for="Choises[i].Answer" class="text-danger"></span>
+                </div>
+            }
+        </div>
+        <button type="button" id="addChoiceButton" class="btn btn-secondary">Add Choice</button>
+    </div>
+
+    <div class="form-group" style="display: inline-block; margin-top: 25px;">
+        <button type="submit" class="btn btn-success">Insert</button>
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </div>
+</form>
+
+<script>
+    document.getElementById("addChoiceButton").addEventListener("click", function () {
+        var container = document.getElementById("choicesContainer");
+        var index = container.children.length;
+        var div = document.createElement("div");
+        div.className = "choice-item";
+        div.style.display = "flex";
+        div.style.alignItems = "center";
+        div.style.gap = "10px";
+        div.style.marginBottom = "10px";
+        div.innerHTML = `
+                    <input name="Choises[${index}].Answer" class="form-control" placeholder="Answer" style="flex-grow: 1;" />
+                    <input type="radio" name="CorrectChoiceIndex" value="${index}" /> Correct
+                    <button type="button" class="btn btn-danger remove-choice-button">Remove</button>
+                `;
+        container.appendChild(div);
+        addRemoveChoiceEventListener(div.querySelector(".remove-choice-button"));
+    });
+
+    function addRemoveChoiceEventListener(button) {
+        button.addEventListener("click", function () {
+            var choiceItem = button.parentElement;
+            choiceItem.parentElement.removeChild(choiceItem);
+        });
+    }
+
+    document.querySelectorAll(".remove-choice-button").forEach(function (button) {
+        addRemoveChoiceEventListener(button);
+    });
+</script>

@@ -1,8 +1,9 @@
-﻿using WebExam.Models.Implementations;
+﻿using WebExam.Entity.Implementations;
+using WebExam.Models.Implementations;
 
 namespace WebExam.Services.Interfaces
 {
-    public interface IExamService : IService<ExamModel>
+    public interface IExamService : IService<Exam>
     {
     }
 }

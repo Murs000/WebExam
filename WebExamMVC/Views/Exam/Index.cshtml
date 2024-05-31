@@ -1,0 +1,32 @@
+﻿@model List<WebExamMVC.Models.ExamModel>
+
+<h1>Exams</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Exam Start</th>
+            <th>Exam End</th>
+            <th>Subject</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var exam in Model)
+        {
+            <tr>
+                <td>@exam.Id</td>
+                <td>@exam.ExamStart</td>
+                <td>@exam.ExamEnd</td>
+                <td>@exam.Subject.Name</td>
+                <td>
+                    <a asp-action="Update" asp-route-id="@exam.Id" class="btn btn-primary">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@exam.Id" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Create" class="btn btn-success">Create New Exam</a>

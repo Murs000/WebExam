@@ -7,8 +7,7 @@ namespace WebExam.Entity.Implementations
     {
         [Key]
         public int Id { get; set; }
-        public int ExamId => Exam.Id;
+        public int ExamId { get; set; }
         public Exam Exam { get; set; } = new Exam();
-        public List<Question> Questions { get; set; } = [];
     }
 }

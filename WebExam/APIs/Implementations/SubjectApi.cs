@@ -2,6 +2,7 @@
 using WebExam.Models.Implementations;
 using WebExam.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using WebExam.Entity.Implementations;
 
 namespace WebExam.APIs.Implementations
 {
@@ -10,26 +11,26 @@ namespace WebExam.APIs.Implementations
         public void Register(WebApplication app)
         {
             app.MapGet("/Subjects", Get)
-                .Produces<List<SubjectModel>>(StatusCodes.Status200OK)
+                .Produces<List<Subject>>(StatusCodes.Status200OK)
                 .WithName("GetAllSubjects")
                 .WithTags("Getters")
-                .RequireAuthorization("AdminOnly");
+                .RequireAuthorization("Stuff");
 
             app.MapGet("/Subjects/{id}", GetById)
-                .Produces<SubjectModel>(StatusCodes.Status200OK)
+                .Produces<Subject>(StatusCodes.Status200OK)
                 .WithName("GetSubject")
                 .WithTags("Getters")
-                .RequireAuthorization("AdminOnly");
+                .RequireAuthorization("Stuff");
 
             app.MapPost("/Subjects", Post)
-                .Accepts<SubjectModel>("application/json")
-                .Produces<SubjectModel>(StatusCodes.Status201Created)
+                .Accepts<Subject>("application/json")
+                .Produces<Subject>(StatusCodes.Status201Created)
                 .WithName("CreateSubject")
                 .WithTags("Creators")
                 .RequireAuthorization("AdminOnly");
 
             app.MapPut("/Subjects", Put)
-                .Accepts<SubjectModel>("application/json")
+                .Accepts<Subject>("application/json")
                 .WithName("UpdateSubject")
                 .WithTags("Updaters")
                 .RequireAuthorization("AdminOnly");
@@ -42,22 +43,22 @@ namespace WebExam.APIs.Implementations
         }
 
         private IResult Get(IServiceUnitOfWork service) =>
-            service.SubjectService.Get() is List<SubjectModel> subjects
+            service.SubjectService.Get() is List<Subject> subjects
             ? Results.Ok(subjects)
             : Results.NotFound();
 
         private IResult GetById(int id, IServiceUnitOfWork service) =>
-            service.SubjectService.Get(id) is SubjectModel subject
+            service.SubjectService.Get(id) is Subject subject
             ? Results.Ok(subject)
             : Results.NotFound();
 
-        private IResult Post([FromBody] SubjectModel subject, IServiceUnitOfWork service)
+        private IResult Post([FromBody] Subject subject, IServiceUnitOfWork service)
         {
             service.SubjectService.Insert(subject);
             return Results.Created($"/Subjects/{subject.Id}", subject);
         }
 
-        private IResult Put([FromBody] SubjectModel subject, IServiceUnitOfWork service)
+        private IResult Put([FromBody] Subject subject, IServiceUnitOfWork service)
         {
             service.SubjectService.Update(subject);
             return Results.NoContent();

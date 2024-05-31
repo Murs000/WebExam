@@ -16,7 +16,6 @@ namespace WebExam.Services.Implementations
 
             var questions= repository.QuestionRepository.Get().Where(e => e.SubjectId == examPaper.Exam.SubjectId).ToList();
             var uniqueQuestions = UniqueQuestions(questions,20);
-            examPaper.Questions = new List<Question>(uniqueQuestions);
 
             return repository.ExamPaperRepository.Insert(examPaper);
         } 

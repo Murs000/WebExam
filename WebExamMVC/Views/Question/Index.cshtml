@@ -1,0 +1,46 @@
+﻿@{
+    @using WebExamMVC.Models
+    @model List<QuestionModel>
+
+    <h1>Questions</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Condition</th>
+                <th>Subject</th>
+                <th>Choices</th>
+                <th>
+                    Actions
+                    <p style="display: inline-block; margin-bottom: -5px;margin-left: 120px;">
+                        <a asp-action="Create" class="btn btn-success">Create</a>
+                    </p>
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var question in Model)
+            {
+                <tr>
+                    <td>@question.Id</td>
+                    <td>@question.Condition</td>
+                    <td>@question.Subject.Name</td>
+                    <td>
+                        <ul>
+                            @foreach (var choice in question.Choises)
+                            {
+                                <li>@choice.Answer @(choice.IsTrue ? "(Correct)" : "")</li>
+                            }
+                        </ul>
+                    </td>
+                    <td>
+                        <a asp-action="Update" asp-route-id="@question.Id" class="btn btn-primary">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@question.Id" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

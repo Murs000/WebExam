@@ -1,0 +1,24 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    @using WebExamMVC.Models;
+    @using WebExamMVC.Enums;
+    @model SubjectModel
+
+    <h1>Create User</h1>
+
+    <form asp-action="Insert" method="post">
+        <input asp-for="Id" hidden />
+
+        <div class="form-group">
+            <label asp-for="Name" class="control-label">Name</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group" style="display: inline-block; margin-top: 25px;">
+            <button type="submit" class="btn btn-success">Insert</button>
+            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        </div>
+    </form>
+}

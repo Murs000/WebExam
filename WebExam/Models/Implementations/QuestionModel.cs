@@ -8,7 +8,7 @@ namespace WebExam.Models.Implementations
         public int Id { get; set; }
         public string Condition { get; set; } = string.Empty;
         public List<Choise> Choises { get; set; } = [];
-        public int SubjectId => Subject.Id;
+        public int SubjectId { get; set; }
         public Subject Subject { get; set; } = new Subject();
     }
 }

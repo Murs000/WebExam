@@ -20,10 +20,8 @@ namespace WebExam.Mappers.Implementations
                     {
                         Id = entity.Exam.Subject.Id,
                         Name = entity.Exam.Subject.Name,
-                        Questions = new List<Question>(entity.Exam.Subject.Questions)
                     },
                 },
-                Questions = new List<Question>(entity.Questions)
             };
             return model;
         }
@@ -42,10 +40,8 @@ namespace WebExam.Mappers.Implementations
                     {
                         Id = model.Exam.Subject.Id,
                         Name = model.Exam.Subject.Name,
-                        Questions = new List<Question>(model.Exam.Subject.Questions)
                     },
                 },
-                Questions = new List<Question>(model.Questions)
             };
             return entity;
         }

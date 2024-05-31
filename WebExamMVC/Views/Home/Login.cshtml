@@ -4,9 +4,9 @@
     ViewData["Title"] = "Login";
 }
 
-<h2>Login</h2>
+<h2 style="margin-top: 50px">Login</h2>
 
-<form asp-action="Login" method="post">
+<form asp-action="Login" method="post" style="margin-top: 50px">
     <div class="form-group">
         <label asp-for="Login" class="control-label"></label>
         <input asp-for="Login" class="form-control" />
@@ -18,7 +18,7 @@
         <span asp-validation-for="Password" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <button type="submit" class="btn btn-primary">Login</button>
+        <button style="display: inline-block; margin-top: 25px;" type="submit" class="btn btn-primary">Login</button>
     </div>
 </form>
 

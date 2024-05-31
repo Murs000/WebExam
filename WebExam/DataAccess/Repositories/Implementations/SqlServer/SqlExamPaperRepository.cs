@@ -20,14 +20,9 @@ namespace WebExam.DataAccess.Repositories.Implementations.SqlServer
             ExamPaper entityFromDb = context.ExamPapers.First(e => e.Id == entity.Id);
             if (entityFromDb == null) return false;
 
-            entityFromDb = new ExamPaper
-            {
-                Id = entity.Id,
-                Exam = context.Exams.First(e => e.Id == entity.ExamId),
-                Questions = new List<Question>(entity.Questions)
-            };
+            entityFromDb.Id = entity.Id;
+            entityFromDb.Exam = context.Exams.First(e => e.Id == entity.ExamId);
 
-            context.Update(entityFromDb);
             context.SaveChanges();
 
             return true;

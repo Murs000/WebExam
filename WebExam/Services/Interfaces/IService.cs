@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 
 namespace WebExam.Services.Interfaces
 {
-    public interface IService<T> where T : IApiModel
+    public interface IService<T> 
     {
         List<T> Get();
         T Get(int modelId);

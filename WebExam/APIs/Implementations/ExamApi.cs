@@ -2,6 +2,7 @@
 using WebExam.Models.Implementations;
 using WebExam.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using WebExam.Entity.Implementations;
 
 namespace WebExam.APIs.Implementations
 {
@@ -10,26 +11,26 @@ namespace WebExam.APIs.Implementations
         public void Register(WebApplication app)
         {
             app.MapGet("/Exams", Get)
-                .Produces<List<ChoiseModel>>(StatusCodes.Status200OK)
+                .Produces<List<Exam>>(StatusCodes.Status200OK)
                 .WithName("GetAllExams")
                 .WithTags("Getters")
                 .RequireAuthorization("AdminOnly");
 
             app.MapGet("/Exams/{id}", GetById)
-                .Produces<ChoiseModel>(StatusCodes.Status200OK)
+                .Produces<Exam>(StatusCodes.Status200OK)
                 .WithName("GetExam")
                 .WithTags("Getters")
                 .RequireAuthorization("AdminOnly");
 
             app.MapPost("/Exams", Post)
-                .Accepts<ChoiseModel>("application/json")
-                .Produces<ChoiseModel>(StatusCodes.Status201Created)
+                .Accepts<Exam>("application/json")
+                .Produces<Exam>(StatusCodes.Status201Created)
                 .WithName("CreatetExam")
                 .WithTags("Creators")
                 .RequireAuthorization("AdminOnly");
 
             app.MapPut("/Exams", Put)
-                .Accepts<ChoiseModel>("application/json")
+                .Accepts<Exam>("application/json")
                 .WithName("UpdatetExam")
                 .WithTags("Updaters")
                 .RequireAuthorization("AdminOnly");
@@ -42,24 +43,24 @@ namespace WebExam.APIs.Implementations
         }
 
         private IResult Get(IServiceUnitOfWork service) =>
-            service.ExamService.Get() is List<ExamModel> choises
-            ? Results.Ok(choises)
+            service.ExamService.Get() is List<Exam> exams
+            ? Results.Ok(exams)
             : Results.NotFound();
 
         private IResult GetById(int id, IServiceUnitOfWork service) =>
-            service.ExamService.Get(id) is ExamModel choise
-            ? Results.Ok(choise)
+            service.ExamService.Get(id) is Exam exam
+            ? Results.Ok(exam)
             : Results.NotFound();
 
-        private IResult Post([FromBody] ExamModel choise, IServiceUnitOfWork service)
+        private IResult Post([FromBody] Exam exam, IServiceUnitOfWork service)
         {
-            service.ExamService.Insert(choise);
-            return Results.Created($"/Exams/{choise.Id}", choise);
+            service.ExamService.Insert(exam);
+            return Results.Created($"/Exams/{exam.Id}", exam);
         }
 
-        private IResult Put([FromBody] ExamModel choise, IServiceUnitOfWork service)
+        private IResult Put([FromBody] Exam exam, IServiceUnitOfWork service)
         {
-            service.ExamService.Update(choise);
+            service.ExamService.Update(exam);
             return Results.NoContent();
         }
 

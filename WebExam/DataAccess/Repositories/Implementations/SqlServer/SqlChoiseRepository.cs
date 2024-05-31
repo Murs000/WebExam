@@ -25,14 +25,11 @@ namespace WebExam.DataAccess.Repositories.Implementations.SqlServer
             Choise entityFromDb = _context.Choises.First(e => e.Id == entity.Id);
             if (entityFromDb == null) return false;
 
-            entityFromDb = new Choise
-            {
-                Id = entity.Id,
-                Answer = entity.Answer,
-                IsTrue = entity.IsTrue,
-            };
 
-            _context.Update(entityFromDb);
+            entityFromDb.Id = entity.Id;
+            entityFromDb.Answer = entity.Answer;
+            entityFromDb.IsTrue = entity.IsTrue;
+
             _context.SaveChanges();
 
             return true;
