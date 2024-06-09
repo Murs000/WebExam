@@ -21,7 +21,6 @@ namespace WebExamMVC.Controllers
             };
             return View("Form",model);
         }
-
         [HttpPost]
         public IActionResult Insert(QuestionViewModel model)
         {
@@ -40,14 +39,20 @@ namespace WebExamMVC.Controllers
 
                     foreach (var choice in model.Choises)
                     {
-                        question.Choises.Add(choice);
+                        if(choice.Id != -1)
+                        {
+                            question.Choises.Add(choice);
+                        }
+                        if(choice.Id == model.CorrectChoiceIndex)
+                        {
+                            choice.IsTrue = true;
+                        }
+                        else
+                        {
+                            choice.IsTrue = false;
+                        }
                     }
 
-                    // Set the correct choice
-                    if (model.CorrectChoiceIndex >= 0 && model.CorrectChoiceIndex < model.Choises.Count)
-                    {
-                        question.Choises[model.CorrectChoiceIndex].IsTrue = true;
-                    }
                     questionService.Create(question);
                 }
                 else
@@ -64,14 +69,20 @@ namespace WebExamMVC.Controllers
 
                     foreach (var choice in model.Choises)
                     {
-                        question.Choises.Add(choice);
+                        if (choice.Id != -1)
+                        {
+                            question.Choises.Add(choice);
+                        }
+                        if (choice.Id == model.CorrectChoiceIndex)
+                        {
+                            choice.IsTrue = true;
+                        }
+                        else
+                        {
+                            choice.IsTrue = false;
+                        }
                     }
 
-                    // Set the correct choice
-                    if (model.CorrectChoiceIndex >= 0 && model.CorrectChoiceIndex < model.Choises.Count)
-                    {
-                        question.Choises[model.CorrectChoiceIndex].IsTrue = true;
-                    }
                     questionService.Update(question);
                 }
 

@@ -31,11 +31,13 @@ namespace WebExam.Mappers.Implementations
             ExamPaper entity = new ExamPaper()
             {
                 Id = model.Id,
+                ExamId = model.Exam.Id,
                 Exam = new Exam()
                 {
                     Id = model.Exam.Id,
                     ExamStart = model.Exam.ExamStart,
                     ExamEnd = model.Exam.ExamEnd,
+                    SubjectId = model.Exam.Subject.Id,
                     Subject = new Subject()
                     {
                         Id = model.Exam.Subject.Id,

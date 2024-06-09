@@ -1,4 +1,5 @@
-﻿using WebExam.DataAccess.Repositories.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using WebExam.DataAccess.Repositories.Interfaces;
 using WebExam.DataAccess.Repositorys.Implementations;
 using WebExam.Entity.Implementations;
 
@@ -8,13 +9,35 @@ namespace WebExam.DataAccess.Repositories.Implementations.SqlServer
     {
         public List<ExamPaper> Get() => context.ExamPapers.ToList();
         public ExamPaper Get(int entityId) => context.ExamPapers.First(e => e.Id == entityId);
+
+
         public int Insert(ExamPaper entity)
         {
-            context.ExamPapers.Add(entity);
+            // Fetch existing subject
+            int existingSubjectId = entity.Exam.SubjectId;
+            var existingSubject = context.Subjects.First(e => e.Id == existingSubjectId);
+
+            // Fetch existing exam
+            int existingExamId = entity.ExamId;
+            var existingExam = context.Exams.First(e => e.Id == existingExamId);
+
+            // Create new ExamPaper entity
+            ExamPaper newEntity = new ExamPaper()
+            {
+                ExamId = existingExam.Id,
+                Exam = existingExam
+            };
+
+            // Add the new ExamPaper to the context
+            context.ExamPapers.Add(newEntity);
+
+            // Save changes to the database
             context.SaveChanges();
 
-            return entity.Id;
+            return newEntity.Id;
         }
+
+        
         public bool Update(ExamPaper entity)
         {
             ExamPaper entityFromDb = context.ExamPapers.First(e => e.Id == entity.Id);

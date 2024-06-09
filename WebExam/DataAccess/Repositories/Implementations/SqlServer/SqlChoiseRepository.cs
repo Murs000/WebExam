@@ -4,25 +4,21 @@ using WebExam.Entity.Implementations;
 
 namespace WebExam.DataAccess.Repositories.Implementations.SqlServer
 {
-    public class SqlChoiseRepository : IChoiseRepository
+    public class SqlChoiseRepository(ExamAppDb context) : IChoiseRepository
     {
-        private readonly ExamAppDb _context;
-        public SqlChoiseRepository(ExamAppDb context)
-        {
-            _context = context;
-        }
-        public List<Choise> Get() => _context.Choises.ToList();
-        public Choise Get(int entityId) => _context.Choises.First(e => e.Id == entityId);
+        public List<Choise> Get() => context.Choises.ToList();
+        public Choise Get(int entityId) => context.Choises.First(e => e.Id == entityId);
+        public List<Choise> GetByQuestion(int QuestionId) => context.Choises.Where(e =>  e.QuestionId == QuestionId).ToList();
         public int Insert(Choise entity)
         {
-            _context.Choises.Add(entity);
-            _context.SaveChanges();
+            context.Choises.Add(entity);
+            context.SaveChanges();
 
             return entity.Id;
         }
         public bool Update(Choise entity)
         {
-            Choise entityFromDb = _context.Choises.First(e => e.Id == entity.Id);
+            Choise entityFromDb = context.Choises.First(e => e.Id == entity.Id);
             if (entityFromDb == null) return false;
 
 
@@ -30,17 +26,17 @@ namespace WebExam.DataAccess.Repositories.Implementations.SqlServer
             entityFromDb.Answer = entity.Answer;
             entityFromDb.IsTrue = entity.IsTrue;
 
-            _context.SaveChanges();
+            context.SaveChanges();
 
             return true;
         }
         public bool Delete(int entityId)
         {
-            Choise entityFromDb = _context.Choises.First(e => e.Id == entityId);
+            Choise entityFromDb = context.Choises.First(e => e.Id == entityId);
             if (entityFromDb == null) return false;
 
-            _context.Choises.Remove(entityFromDb);
-            _context.SaveChanges();
+            context.Choises.Remove(entityFromDb);
+            context.SaveChanges();
 
             return true;
         }
@@ -53,7 +49,7 @@ namespace WebExam.DataAccess.Repositories.Implementations.SqlServer
             {
                 if (disposing)
                 {
-                    _context.Dispose();
+                    context.Dispose();
                 }
             }
             _disposed = true;

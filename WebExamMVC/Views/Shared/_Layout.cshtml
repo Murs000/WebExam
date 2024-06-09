@@ -46,6 +46,12 @@
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Question" asp-action="Index">Questions</a>
                                 </li>
                             }
+                            @if (role == "Student" || role == "Admin")
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="ExamPaper" asp-action="Index">Questions</a>
+                                </li>
+                            }
                         </ul>
                     </div>
                 </div>

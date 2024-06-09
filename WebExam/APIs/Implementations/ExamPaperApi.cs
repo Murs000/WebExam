@@ -13,20 +13,20 @@ namespace WebExam.APIs.Implementations
                 .Produces<List<ExamPaperModel>>(StatusCodes.Status200OK)
                 .WithName("GetAllExamPapers")
                 .WithTags("Getters")
-                .RequireAuthorization("Student");
+                .RequireAuthorization("Stuff");
 
             app.MapGet("/ExamPapers/{id}", GetById)
                 .Produces<ExamPaperModel>(StatusCodes.Status200OK)
                 .WithName("GetExamPaper")
                 .WithTags("Getters")
-                .RequireAuthorization("Student");
+                .RequireAuthorization("Stuff");
 
             app.MapPost("/ExamPapers", Post)
                 .Accepts<ExamPaperModel>("application/json")
                 .Produces<ExamPaperModel>(StatusCodes.Status201Created)
                 .WithName("CreatetExamPaper")
                 .WithTags("Creators")
-                .RequireAuthorization("Student");
+                .RequireAuthorization("Stuff");
 
             app.MapPut("/ExamPapers", Put)
                 .Accepts<ExamPaperModel>("application/json")

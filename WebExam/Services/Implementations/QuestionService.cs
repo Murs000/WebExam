@@ -46,10 +46,28 @@ namespace WebExam.Services.Implementations
         {
             if (repository.QuestionRepository.Update(mapper.QuestionMapper.Map(model)))
             {
+                var choises = repository.ChoiseRepository.GetByQuestion(model.Id);
                 foreach (var choise in model.Choises)
                 {
-                    if (!repository.ChoiseRepository.Update(choise))
-                        return false;
+                    if(choises.Exists(e => e.Id == choise.Id))
+                    {
+                        if (!repository.ChoiseRepository.Update(choise))
+                            return false;
+                    }
+                    else
+                    {
+                        if (choise.Id == 0)
+                        {
+                            choise.QuestionId = model.Id;
+                            choise.Question = repository.QuestionRepository.Get(model.Id);
+
+                            repository.ChoiseRepository.Insert(choise);
+                        }
+                        else
+                        {
+                            repository.ChoiseRepository.Delete(choise.Id);
+                        }
+                    }
                 }
                 return true;
             }

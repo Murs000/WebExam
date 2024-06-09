@@ -1,0 +1,31 @@
+﻿@model WebExamMVC.Models.ExamPaperModel
+
+@{
+    ViewBag.Title = $"{Model.Exam.Subject.Name} Exam";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">@Model.Exam.Subject.Name Exam</h2>
+
+    <form asp-action="Submit" method="post">
+        @for (int i = 0; i < Model.Questions.Count; i++)
+        {
+            <div class="form-group mb-4 p-3 border rounded">
+                <p class="font-weight-bold">@Model.Questions[i].Condition</p>
+                <div class="ml-3">
+                    @for (int j = 0; j < Model.Questions[i].Choises.Count; j++)
+                    {
+                        var choiceId = $"question_{i}_choice_{j}";
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="selectedChoices[@i]" value="@Model.Questions[i].Choises[j].Id" id="@choiceId" />
+                            <label class="form-check-label" for="@choiceId">@Model.Questions[i].Choises[j].Answer</label>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>

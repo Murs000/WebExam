@@ -44,6 +44,7 @@ builder.Services.AddTransient<UserService>();
 builder.Services.AddTransient<SubjectService>();
 builder.Services.AddTransient<QuestionService>();
 builder.Services.AddTransient<ExamService>();
+builder.Services.AddTransient<ExamPaperService>();
 
 builder.Services.AddHttpClient();
 

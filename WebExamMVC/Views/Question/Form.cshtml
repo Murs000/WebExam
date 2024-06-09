@@ -34,8 +34,9 @@
                 <div class="choice-item" style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
                     <input asp-for="Choises[i].Id" hidden />
                     <input asp-for="Choises[i].Answer" class="form-control" placeholder="Answer" style="flex-grow: 1;" />
-                    <input type="radio" name="CorrectChoiceIndex" value="@i" @(Model.CorrectChoiceIndex == i ? "checked" : "") /> Correct
+                    <input type="radio" name="CorrectChoiceIndex" value="@Model.Choises[i].Id" @(Model.CorrectChoiceIndex == i ? "checked" : "") /> Correct
                     <button type="button" class="btn btn-danger remove-choice-button">Remove</button>
+                    <input asp-for="Choises[i].IsTrue" hidden />
                     <span asp-validation-for="Choises[i].Answer" class="text-danger"></span>
                 </div>
             }
@@ -60,10 +61,12 @@
         div.style.gap = "10px";
         div.style.marginBottom = "10px";
         div.innerHTML = `
-                    <input name="Choises[${index}].Answer" class="form-control" placeholder="Answer" style="flex-grow: 1;" />
-                    <input type="radio" name="CorrectChoiceIndex" value="${index}" /> Correct
-                    <button type="button" class="btn btn-danger remove-choice-button">Remove</button>
-                `;
+                        <input name="Choises[${index}].Id" type="hidden" value="0" />
+                        <input name="Choises[${index}].Answer" class="form-control" placeholder="Answer" style="flex-grow: 1;" />
+                        <input type="radio" name="CorrectChoiceIndex" value="${index}" /> Correct
+                        <button type="button" class="btn btn-danger remove-choice-button">Remove</button>
+                        <input name="Choises[${index}].IsTrue" type="hidden" value="false" />
+                    `;
         container.appendChild(div);
         addRemoveChoiceEventListener(div.querySelector(".remove-choice-button"));
     });
@@ -71,7 +74,9 @@
     function addRemoveChoiceEventListener(button) {
         button.addEventListener("click", function () {
             var choiceItem = button.parentElement;
-            choiceItem.parentElement.removeChild(choiceItem);
+            var idInput = choiceItem.querySelector('input[name$=".Id"]');
+            idInput.value = -1;
+            choiceItem.style.display = 'none';
         });
     }
 

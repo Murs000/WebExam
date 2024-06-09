@@ -14,8 +14,8 @@ namespace WebExam.Services.Implementations
         {
             ExamPaper examPaper = mapper.ExamPaperMapper.Map(model);
 
-            var questions= repository.QuestionRepository.Get().Where(e => e.SubjectId == examPaper.Exam.SubjectId).ToList();
-            var uniqueQuestions = UniqueQuestions(questions,20);
+            //var questions= repository.QuestionRepository.Get().Where(e => e.SubjectId == examPaper.Exam.SubjectId).ToList();
+            //var uniqueQuestions = UniqueQuestions(questions,20);
 
             return repository.ExamPaperRepository.Insert(examPaper);
         } 
